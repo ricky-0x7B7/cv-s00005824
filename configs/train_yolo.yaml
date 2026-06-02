@@ -1,0 +1,45 @@
+# Iperparametri di fine-tuning di YOLO.
+# Consumati da scripts/train_yolo.py (i flag CLI sovrascrivono questi valori).
+#
+# Nota di dominio: le immagini di cantiere sono diritte, quindi DISABILITIAMO le
+# rotazioni ampie e i flip verticali (un lavoratore non è mai a testa in giù)
+# mantenendo l'augmentation fotometrica (luminosità/HSV) e mosaic, adatti
+# all'illuminazione variabile dei cantieri.
+
+# --- core ---
+model: yolov8n.pt        # nano: baseline veloce; passa a yolov8s.pt per l'esperimento sulla capacità
+# Usa il data.yaml generato (path assoluti). Ultralytics risolve un `path:`
+# relativo rispetto al proprio datasets_dir, non al repo, per cui configs/sh17.yaml è
+# solo il riferimento dei nomi delle classi — training/eval puntano a data/processed/sh17/data.yaml.
+data: data/processed/sh17/data.yaml
+epochs: 80
+imgsz: 640
+batch: 16
+device: auto             # auto -> mps / cuda / cpu
+patience: 20             # early stopping
+seed: 42
+# AMP (mixed precision) è una causa frequente di crash intermittenti del kernel
+# durante l'addestramento su Apple MPS. Disabilitato per la stabilità nelle run
+# locali lunghe; impostalo a true su CUDA per un guadagno di velocità/memoria.
+amp: false
+project: runs/ppe_detection
+name: yolo_sh17
+
+# --- optimizer ---
+optimizer: auto
+lr0: 0.01
+lrf: 0.01
+cos_lr: true
+
+# --- augmentation (domain-aware) ---
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 0.0             # niente rotazione: le scene di cantiere sono diritte
+translate: 0.1
+scale: 0.5
+fliplr: 0.5
+flipud: 0.0              # niente flip verticale
+mosaic: 1.0
+close_mosaic: 10         # disabilita mosaic per le ultime 10 epoche per stabilizzare
+mixup: 0.0

@@ -1,0 +1,28 @@
+# Immagine di riproducibilità solo CPU.
+# Scopo: permettere a un esaminatore di eseguire smoke test e inferenza in un
+# ambiente pulito.
+# NON pensata per l'addestramento accelerato completo (Apple MPS non è disponibile
+# dentro un container Linux su macOS).
+#
+#   docker build -t s00005824:cpu -f Dockerfile.cpu .
+#   docker run --rm -it -p 8888:8888 -v "$PWD":/app s00005824:cpu
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Librerie di sistema richieste da OpenCV.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installa esplicitamente i wheel CPU di PyTorch per evitare di tirare giù i pacchetti CUDA.
+COPY requirements.txt .
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision \
+    && pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8888
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser"]

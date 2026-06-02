@@ -1,0 +1,34 @@
+# Configurazione della baseline classica HOG + SVM.
+# Consumata da scripts/train_baseline.py e src/classical_model.py.
+#
+# Task: classificazione binaria "helmet vs no_helmet" sui crop estratti dalle
+# annotazioni SH17. I crop positivi provengono dai box `helmet`; i crop negativi
+# provengono dai box `head` che NON si sovrappongono a un casco (cioè teste scoperte).
+
+task: helmet_vs_no_helmet
+
+# Estrazione dei crop
+crop_size: [128, 128]      # dimensione di input fissa prima dell'HOG
+positive_class: helmet     # indice SH17 10
+negative_class: head       # indice SH17 12
+helmet_iou_exclude: 0.2    # un box head che si sovrappone a un casco oltre questo IoU viene scartato come ambiguo
+max_per_class: 4000        # tetto per mantenere la baseline veloce e bilanciata
+val_fraction: 0.2
+
+# Descrittore HOG (skimage.feature.hog)
+hog:
+  orientations: 9
+  pixels_per_cell: [8, 8]
+  cells_per_block: [2, 2]
+  block_norm: L2-Hys
+  transform_sqrt: true
+  channel_axis: null       # null -> converti i crop in scala di grigi prima dell'HOG
+
+# SVM (sklearn). Uno StandardScaler viene sempre anteposto in una Pipeline.
+svm:
+  kernel: rbf              # 'linear' or 'rbf'
+  C: 10.0
+  gamma: scale
+  class_weight: balanced
+
+seed: 42

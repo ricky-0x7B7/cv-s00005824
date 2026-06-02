@@ -1,0 +1,36 @@
+# Configurazione del dataset Ultralytics YOLO per il dataset SH17.
+#
+# I nomi e gli indici delle classi seguono il sh17.yaml UFFICIALE di SH17
+# (https://github.com/ahmadmughees/SH17dataset) — l'ordine è autoritativo
+# e non deve essere modificato, altrimenti le label diventano disallineate.
+#
+# NOTA: per training/eval passa il file dati GENERATO
+#   data/processed/sh17/data.yaml
+# che scripts/prepare_dataset.py scrive con un `path` ASSOLUTO. Ultralytics
+# risolve un `path:` relativo rispetto al proprio datasets_dir (non al repo), per cui
+# questo file committato serve come riferimento canonico dei nomi delle classi; il
+# `path` relativo qui sotto funziona solo se il repo è il datasets_dir di Ultralytics.
+path: ../data/processed/sh17
+train: images/train
+val: images/val
+test: images/test
+
+# 17 classi (indicizzate da 0)
+names:
+  0: person
+  1: ear
+  2: ear-mufs
+  3: face
+  4: face-guard
+  5: face-mask
+  6: foot
+  7: tool
+  8: glasses
+  9: gloves
+  10: helmet
+  11: hands
+  12: head
+  13: medical-suit
+  14: shoes
+  15: safety-suit
+  16: safety-vest

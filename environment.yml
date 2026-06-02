@@ -1,0 +1,36 @@
+# Ambiente Conda per il progetto Computer Vision DPI in cantiere.
+# Ambiente consigliato (e principale) per lo sviluppo locale e l'addestramento
+# completo, specialmente su Apple Silicon, dove PyTorch usa il backend `mps`.
+#
+#   conda env create -f environment.yml
+#   conda activate s00005824
+#
+# torch/torchvision sono installati via pip per semplificare i wheel su Apple Silicon.
+name: s00005824
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - scikit-image
+  - opencv
+  - pillow
+  - pyyaml
+  - tqdm
+  - pytest
+  - pip:
+      - torch
+      - torchvision
+      - ultralytics
+      - supervision
+      - albumentations
+      - pycocotools
+      - tensorboard
+      - streamlit

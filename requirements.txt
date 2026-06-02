@@ -1,0 +1,22 @@
+# Requisiti pip: usati per l'immagine Docker solo CPU e come fallback solo-pip.
+# L'ambiente principale è environment.yml (Conda/Miniforge).
+numpy
+pandas
+matplotlib
+seaborn
+opencv-python
+scikit-learn
+scikit-image
+pillow
+pyyaml
+tqdm
+pytest
+torch
+torchvision
+ultralytics
+supervision
+albumentations
+pycocotools
+tensorboard
+streamlit
+jupyterlab

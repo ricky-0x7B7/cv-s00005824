@@ -1,0 +1,54 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Ambienti
+.venv/
+env/
+venv/
+
+# Dati (non committare mai il dataset)
+data/raw/
+data/processed/
+
+# Output dell'addestramento
+runs/
+wandb/
+
+# Pesi dei modelli addestrati (distribuiscili invece via GitHub Release / HF Hub)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.mlpackage
+*.pkl
+
+# Report generati in locale (mantieni i template markdown, ignora gli asset generati)
+reports/figures/generated/
+reports/metrics/generated/
+outputs/
+
+# Log di addestramento / run
+*.log
+
+# Note personali (tenute fuori dal repo)
+appunti/
+
+# Download preaddestrati messi in cache da ultralytics
+yolov8*.pt
+yolo11*.pt
+
+# Mantieni i file segnaposto
+!**/.gitkeep

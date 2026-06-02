@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "construction-ppe-cv"
+version = "1.0.0"
+description = "Pipeline di Computer Vision per il rilevamento dei DPI in cantiere e la compliance di sicurezza dei lavoratori (dataset SH17)."
+requires-python = ">=3.10"
+readme = "README.md"
+
+[tool.setuptools]
+# La libreria riutilizzabile risiede nel package `src` di livello superiore.
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+# Consente `import src...` dalla radice del repo senza installare il package.
+pythonpath = ["."]
